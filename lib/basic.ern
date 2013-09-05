@@ -1,0 +1,12 @@
+func do_for
+    call for_call
+    math on = on + 1
+endfunc
+
+
+func for
+    - the parameters that must be set are "for_var" and "for_call" which is the function to execute
+    set on = 0
+    while on != loop_var do_for
+endfunc
+

@@ -8,7 +8,7 @@ class Ernie:
     def __init__(self):
         self.variables = {}
         self.ops = {">":op.gt, "<":op.lt, "==":op.eq, "!=":op.ne,">=":op.ge, "<=":op.le}
-        self.keys = ["list", "add", "remove", "find","replace","input_int", "length" ,"input_str", "call", "use", "if", "while", "set", "func", "math", "say", 'swap']
+        self.keys = ["-", "list", "add", "remove", "find","replace","input_int", "length" ,"input_str", "call", "use", "if", "while", "set", "func", "math", "say", 'swap']
         self.funcs = {}
 
     def run(self, code):
@@ -37,6 +37,9 @@ class Ernie:
             if code[on].split()[0] not in self.keys:
                 print "Invalid Syntax: \""+ code[on]+ "\" line: ", str(on+1)
                 exit()
+            if code[on].startswith("-"):
+                code.remove(code[on])
+
             if code[on].startswith("func"):
                 name = code[on].split()[1]
                 c = []
@@ -56,7 +59,7 @@ class Ernie:
         while on != length:
             if code[on].startswith("say"):
                 data = code[on].split()
-                print self.typecheck(data[1])
+                print self.typecheck(' '.join(data[1:]))
 
             if code[on].startswith("set"):
                 data = code[on].split()
@@ -93,7 +96,7 @@ class Ernie:
 
             if code[on].startswith("call"):
                 try:
-                    function = code[on].split()[1]
+                    function = self.typecheck(code[on].split()[1])
                 except:
                     print "Invalid Syntax: \""+ code[on]+ "\" line: ", str(on+1)
                     break

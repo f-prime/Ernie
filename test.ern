@@ -1,0 +1,12 @@
+- Demonstrating a for loop
+
+use lib/basic.ern
+
+set for_var = 100
+set for_call = "this"
+
+func this
+    say "a"
+endfunc
+
+call "for"
