@@ -159,7 +159,7 @@ class Ernie:
                     self.variables[data[2]].append(self.typecheck(data[1]))
 
 
-            if code[on].startswith("input_int"):
+            if code[on].startswith("input_str"):
                 data = code[on].split()
                 if len(data) < 4:
                     print "Syntax Error: \""+code[on]+"\" line: ", str(on+1)
@@ -167,7 +167,7 @@ class Ernie:
                 if data[2] != "=":
                     print "Syntax Error: \""+code[on]+"\" line: ", str(on+1);break
                 var = data[1]
-                string = self.typecheck(data[3])
+                string = self.typecheck(' '.join(data[3:]))
                 if isinstance(string, int):
                     print "Type Error: \""+code[on]+"\" line: ", str(on+1), string
                     break
@@ -188,7 +188,7 @@ class Ernie:
                 if data[2] != "=":
                     print "Syntax Error: \""+code[on]+"\" line: ", str(on+1);break
                 var = data[1]
-                string = self.typecheck(data[3])
+                string = self.typecheck(' '.join(data[3:]))
                 data = raw_input(string)
                 self.variables[var] = data
             

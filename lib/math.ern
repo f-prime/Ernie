@@ -1,0 +1,9 @@
+func sqr
+    - Must define "sqr_var"
+    math sqr_var = sqr_var * sqr_var
+endfunc
+
+func cube
+    - Must define "cube_var"
+    math cube_var = cube_var * cube_var * cube_var
+endfunc

@@ -1,0 +1,5 @@
+use lib/math.ern
+
+input_int sqr_var = "Put in a number to be squared: "
+call "sqr"
+say sqr_var
