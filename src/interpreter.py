@@ -57,7 +57,7 @@ def execute(code):
         elif stuff[0] == "if":
             stuff[1] = typecheck(stuff[1])
             stuff[3] = typecheck(stuff[3])
-            if data.ops[stuff[2]](stuff[1]. stuff[3]):
+            if data.ops[stuff[2]](stuff[1], stuff[3]):
                 code_ = '\n'.join(data.funcs[stuff[4]])
                 lexer.lex(code_)
             
@@ -71,7 +71,8 @@ def execute(code):
                 if data.ops[stuff[2]](stuff[1], stuff[3]):
                     co = '\n'.join(data.funcs[stuff[4]])
                     lexer.lex(co)
-
+                else:
+                    break
         elif stuff[0] == "add":
             data.variables[stuff[2]].append(typecheck(stuff[1]))
 

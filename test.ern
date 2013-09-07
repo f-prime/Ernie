@@ -1,0 +1,26 @@
+set on = 0
+set add = 0
+
+func do_five
+    math add = on + add
+endfunc
+
+
+func do_not_three
+   math five = on % 5
+   if five == 0 do_five
+endfunc
+
+func do_three
+    math add = on + add
+endfunc
+
+func do_main
+    math three = on % 3
+    if three != 0 do_not_three
+    if three == 0 do_three
+    math on = on + 1
+endfunc
+
+while on != 1000 do_main
+say add
