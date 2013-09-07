@@ -3,8 +3,6 @@ About
 
 Ernie is a poorly written langauge interpreter for a poorly put together language in Python. Really, it was just a weekend project of mine that I found to be fun to create in order to learn a little bit about interpreter design.
 
-Some of the concepts in here could be done differently, and will be done differently in the future when I decide to rewrite the interpreter from scratch but only when everything else is done. 
-
 As of right now, Ernie is a fully functional programming language. Should you ever actually use it for real work? I wouldn't.
 
 

@@ -22,5 +22,5 @@ func do_main
     math on = on + 1
 endfunc
 
-while on != 1000 do_main
+while on != 10000 do_main
 say add
