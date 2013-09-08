@@ -23,7 +23,7 @@ def execute(code):
             if not os.path.exists(stuff[1]):
                 error.nofile(code[on], on)
             else:
-                with open(data, 'rb') as file:
+                with open(stuff[1], 'rb') as file:
                     lexer.lex(file.read())
         
         elif stuff[0] == "swap":
