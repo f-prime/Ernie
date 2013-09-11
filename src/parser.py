@@ -1,5 +1,5 @@
 import data
-import errors
+import errors as error
 
 def parse(code):
     length = len(code)-1
