@@ -110,11 +110,11 @@ def execute(code):
 
                 data.variables[var] = out
         elif stuff[0] == "split":
-            check = ' '.join(stuff[3:])
+            check = typecheck(' '.join(stuff[3:]))
             if stuff[2] != "=":
                 error.syntaxerror(code[on], on)
             else:
-                data.variables[stuff[1]] = check.split()
+                data.variables[typecheck(stuff[1])] = check.split()
         elif stuff[0] == "list":
             check = ' '.join(stuff[3:])
             if not check.startswith("[") and not check.endswith("]"):
