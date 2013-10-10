@@ -3,7 +3,11 @@ import errors as error
 import lexer
 import os
 import re
+import socket
 
+def check_equal(stuff, code, on):
+    if stuff[2] != "=":
+        error.syntax(code[on], on)
 
 def execute(code):
     length = len(code)-1
@@ -12,9 +16,75 @@ def execute(code):
     
     while on != length:
         stuff = code[on].split()
+        
         if stuff[0] == "say":
             print typecheck(' '.join(stuff[1:]))
         
+        elif stuff[0] == "socket":
+            check_equal(stuff, code, on)
+            stuff[3] = typecheck(stuff[3])
+            if stuff[3] == "tcp":
+                data.variables[stuff[1]] = socket.socket()
+            else:
+                data.variables[stuff[1]] = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        
+        elif stuff[0] == "bind":
+            check_equal(stuff, code, on)
+            var = typecheck(stuff[1])
+            data_ = ''.join(stuff[3:]).split(",")
+            host = typecheck(data_[0])
+            port = typecheck(data_[1])
+            data_ = (host, port)
+            var.bind(data_)
+            var.listen(5)
+
+        elif stuff[0] == "accept":
+            check_equal(stuff, code, on)
+            obj, b = data.variables[stuff[3]].accept()
+            data.variables[stuff[1]] = obj
+
+        elif stuff[0] == "send":
+            check_equal(stuff, code, on)
+            stuff[3] = typecheck(' '.join(stuff[3:]))
+            data.variables[stuff[1]].send(stuff[3])
+    
+        elif stuff[0] == "recv":
+            check_equal(stuff, code, on)
+            var1 = stuff[1]
+            data_ = ''.join(stuff[3:]).split(",")
+            var = data_[0]
+            buff = typecheck(data_[1])
+            data.variables[var1] = data.variables[var].recv(buff)
+
+        elif stuff[0] == "connect":
+            check_equal(stuff, code, on)
+            var = typecheck(stuff[1])
+            data_ = ''.join(stuff[3:]).split(",")
+            host = typecheck(data_[0])
+            port = typecheck(data_[1])
+            data_ = (host, port)
+            var.connect(data_)
+
+        elif stuff[0] == "open":
+            if stuff[2] != "=":
+                error.syntax(code[on], on)
+            s = ' '.join(stuff[3:]).split(",")
+            print s
+            data.variables[stuff[1]] = open(typecheck(s[0]), s[1])
+        
+        elif stuff[0] == "read":
+            if stuff[2] != "=":
+                error.syntax(code[on], on)
+            data.variables[stuff[1]] = data.variables[stuff[3]].read()
+        
+        elif stuff[0] == "write":
+            if stuff[2] != "=":
+                error.syntax(code[on], on)
+            data.variables[stuff[1]].write(typecheck(' '.join(stuff[3:])))
+        
+        elif stuff[0] == "close":
+            data.variables[stuff[1]].close()
+
         elif stuff[0] == "set":
             if stuff[2] != "=":
                 error.syntax(code[on], on)

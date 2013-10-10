@@ -1,0 +1,4 @@
+socket a = "tcp"
+bind a = "", 5050
+accept o = a
+send o = "asd"

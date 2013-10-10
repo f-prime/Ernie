@@ -1,0 +1,4 @@
+socket a = "tcp"
+connect a = "",5050
+send a = "TEST"
+
