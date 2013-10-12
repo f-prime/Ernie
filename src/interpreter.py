@@ -18,7 +18,7 @@ def execute(code):
         stuff = code[on].split()
         
         if stuff[0] == "say":
-            print typecheck(' '.join(stuff[1:]))
+            print typecheck(' '.join(stuff[1:])).replace("$n", "\n").replace("$t", "\t").replace("$r", "\r")
         
         elif stuff[0] == "socket":
             check_equal(stuff, code, on)
@@ -46,7 +46,7 @@ def execute(code):
         elif stuff[0] == "send":
             check_equal(stuff, code, on)
             stuff[3] = typecheck(' '.join(stuff[3:]))
-            data.variables[stuff[1]].send(stuff[3])
+            data.variables[stuff[1]].send(stuff[3].replace("$n", "\n").replace("$t", "\t").replace("$r", "\r"))
     
         elif stuff[0] == "recv":
             check_equal(stuff, code, on)
@@ -174,12 +174,19 @@ def execute(code):
                 data_ = ''.join(stuff[3:]).split(",")
                 stri = typecheck(data_[0])
                 check = typecheck(data_[1])
-                if stri.find(check) != -1:
+                if check.find(stri) != -1:
                     out = "True"
                 else:
                     out = "False"
 
                 data.variables[var] = out
+        elif stuff[0] == "remove":
+            check = ''.join(stuff[3:]).split(",")
+            check_equal(stuff, code, on)
+            from_ = typecheck(check[0])
+            remove = typecheck(check[1])
+            data.variables[stuff[1]] = remove.replace(from_, '')
+
         elif stuff[0] == "split":
             check = typecheck(' '.join(stuff[3:]))
             if stuff[2] != "=":
@@ -214,7 +221,7 @@ def typecheck(code):
                 return re.findall('"(.*?)"', code)[0]
             except IndexError:
                 return re.findall('"(.*?)', code)[0]
-        
+         
         elif "[" in code:
             code = code.split("[")
             if code[0] not in data.variables:
