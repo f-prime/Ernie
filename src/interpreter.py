@@ -171,9 +171,10 @@ def execute(code):
 
             else:
                 var = stuff[1]
-                check = str(typecheck(stuff[3]))
-                stri = str(typecheck(stuff[4]))
-                if stri.find(check):
+                data_ = ''.join(stuff[3:]).split(",")
+                stri = typecheck(data_[0])
+                check = typecheck(data_[1])
+                if stri.find(check) != -1:
                     out = "True"
                 else:
                     out = "False"
